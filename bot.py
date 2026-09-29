@@ -55,7 +55,7 @@ def result_kb(vid):
     return Markup([
         [Btn("ɢᴇᴛ ᴅᴇꜱᴄʀɪᴘᴛɪᴏɴ", callback_data=f"desc:{vid}", api_kwargs={"style": "success"})],
         [Btn("ᴜᴘᴅᴀᴛᴇ", url=UPDATES_URL)],
-        [Btn("ᴍᴇɴᴜ", callback_data="back", api_kwargs={"style": "primary"})],
+        [Btn("ᴍᴇɴᴜ", callback_data="/start", api_kwargs={"style": "primary"})],
     ])
 
 async def is_joined(bot, user_id):
@@ -112,7 +112,7 @@ async def download_video(url, chat_id, ctx, status):
                 "<b>❌ ᴠɪᴅᴇᴏ ɪꜱ ᴛᴏᴏ ʟᴀʀɢᴇ ᴛᴏ ꜱᴇɴᴅ.</b>", parse_mode=ParseMode.HTML)
             return None
 
-        await status.edit_text("<b>⬆️ ꜱᴇɴᴅɪɴɢ...</b>", parse_mode=ParseMode.HTML)
+        await status.edit_text("<b>📸 ꜱᴇɴᴅɪɴɢ...</b>", parse_mode=ParseMode.HTML)
         caption = info.get("title") or "TikTok video"
 
         vid = uuid.uuid4().hex[:10]
@@ -146,7 +146,7 @@ async def callbacks(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
                 q.message.chat_id, WELCOME.format(name=user.mention_html()),
                 parse_mode=ParseMode.HTML, reply_markup=main_kb(), link_preview_options=NO_PREVIEW)
         else:
-            await q.answer("❌ ʏᴏᴜ ʜᴀᴠᴇɴ'ᴛ ᴊᴏɪɴᴇᴅ", show_alert=True)
+            await q.answer("❌ ʏᴏᴜ ʜᴀᴠᴇɴ'ᴛ ᴊᴏɪɴᴇᴅ ᴄʜᴀɴɴʟᴇ", show_alert=True)
         return
 
     if data.startswith("desc:"):
@@ -158,7 +158,7 @@ async def callbacks(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         await q.answer()
         desc = info.get("description") or "ɴᴏ ᴅᴇꜱᴄʀɪᴘᴛɪᴏɴ ꜰᴏᴜɴᴅ."
         await ctx.bot.send_message(
-            q.message.chat_id, f"<b>📄 ᴅᴇꜱᴄʀɪᴘᴛɪᴏɴ:</b>\n\n{desc[:3500]}",
+            q.message.chat_id, f"<b>📄ᴅᴇꜱᴄʀɪᴘᴛɪᴏɴ👇:</b>\n\n{desc[:3500]}",
             parse_mode=ParseMode.HTML, link_preview_options=NO_PREVIEW)
         return
 
@@ -168,7 +168,7 @@ async def callbacks(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         if not info:
             await q.answer("⚠️ ᴇxᴘɪʀᴇᴅ, ꜱᴇɴᴅ ᴛʜᴇ ʟɪɴᴋ ᴀɢᴀɪɴ", show_alert=True)
             return
-        await q.answer("🔄 ᴜᴘᴅᴀᴛɪɴɢ...")
+        await q.answer("🔍ᴜᴘᴅᴀᴛɪɴɢ...")
         status = await ctx.bot.send_message(
             q.message.chat_id, "<b>⏳ ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ...</b>", parse_mode=ParseMode.HTML)
         try:
@@ -176,7 +176,7 @@ async def callbacks(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
             await status.delete()
         except Exception as e:
             logging.exception("update failed")
-            await status.edit_text(f"<b>❌ ꜰᴀɪʟᴇᴅ: {str(e)[:150]}</b>", parse_mode=ParseMode.HTML)
+            await status.edit_text(f"<b>⛔ ꜰᴀɪʟᴇᴅ ɴᴏᴛ ꜰᴏᴜɴᴅ</b>", parse_mode=ParseMode.HTML)
         return
 
     if data.startswith("song:"):
@@ -255,7 +255,7 @@ async def got_link(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     m = TIKTOK_RE.search(text)
     if not m:
         await update.message.reply_text(
-            "<b>⚠️ ᴘʟᴇᴀꜱᴇ ꜱᴇɴᴅ ᴀ ᴠᴀʟɪᴅ ᴛɪᴋᴛᴏᴋ ʟɪɴᴋ.</b>", parse_mode=ParseMode.HTML)
+            "<b>⛔ ᴘʟᴇᴀꜱᴇ ꜱᴇɴᴅ ᴀ ᴠᴀʟɪᴅ ᴛɪᴋᴛᴏᴋ ʟɪɴᴋ.</b>", parse_mode=ParseMode.HTML)
         return
     url = m.group(1)
     status = await update.message.reply_text(
@@ -266,7 +266,7 @@ async def got_link(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         await status.delete()
     except Exception as e:
         logging.exception("tiktok download failed")
-        await status.edit_text(f"<b>❌ ꜰᴀɪʟᴇᴅ: {str(e)[:200]}</b>", parse_mode=ParseMode.HTML)
+        await status.edit_text(f"<b>⛔ ꜰᴀɪʟᴇᴅ ɴᴏᴛ ꜰᴏᴜɴᴅ </b>", parse_mode=ParseMode.HTML)
 
 def main():
     app = Application.builder().token(TOKEN).build()
