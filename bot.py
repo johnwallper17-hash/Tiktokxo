@@ -53,11 +53,9 @@ def join_kb():
 
 def result_kb(vid):
     return Markup([
-        [Btn("📄 ɢᴇᴛ ᴅᴇꜱᴄʀɪᴘᴛɪᴏɴ", callback_data=f"desc:{vid}", api_kwargs={"style": "success"})],
-        [
-            Btn("🔄 ᴜᴘᴅᴀᴛᴇ", callback_data=f"upd:{vid}"),
-            Btn("🎵 ꜰɪɴᴅ ꜱᴏɴɢ", callback_data=f"song:{vid}", api_kwargs={"style": "primary"}),
-        ],
+        [Btn("ɢᴇᴛ ᴅᴇꜱᴄʀɪᴘᴛɪᴏɴ", callback_data=f"desc:{vid}", api_kwargs={"style": "success"})],
+        [Btn("ᴜᴘᴅᴀᴛᴇ", url=UPDATES_URL)],
+        [Btn("ᴍᴇɴᴜ", callback_data="back", api_kwargs={"style": "primary"})],
     ])
 
 async def is_joined(bot, user_id):
