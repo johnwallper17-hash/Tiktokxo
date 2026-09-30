@@ -50,7 +50,7 @@ def main_kb():
         ],
         [
             Btn("ᴀʙᴏᴜᴛ", callback_data="about", api_kwargs={"style": "danger"}),
-            Btn("⭐ ᴅᴏɴᴀᴛᴇ", callback_data="donate"),
+            Btn("ᴅᴏɴᴀᴛᴇ", callback_data="donate"),
         ],
     ])
 
@@ -141,9 +141,12 @@ async def download_video(url, chat_id, ctx, status):
 
 async def send_donate_menu(msg):
     kb = Markup([
-        [Btn("⭐ 25", callback_data="pay:25"), Btn("⭐ 50", callback_data="pay:50")],
-        [Btn("⭐ 100", callback_data="pay:100"), Btn("⭐ 250", callback_data="pay:250")],
-        [Btn("⭐ 500", callback_data="pay:500"), Btn("⭐ 1000", callback_data="pay:1000")],
+        [Btn("⭐ 15", callback_data="pay:15", api_kwargs={"style": "success"}),
+         Btn("⭐ 25", callback_data="pay:25", api_kwargs={"style": "success"})],
+        [Btn("⭐ 50", callback_data="pay:50", api_kwargs={"style": "success"}),
+         Btn("⭐ 100", callback_data="pay:100", api_kwargs={"style": "success"})],
+        [Btn("⭐ 150", callback_data="pay:150", api_kwargs={"style": "success"}),
+         Btn("⭐ 200", callback_data="pay:200", api_kwargs={"style": "success"})],
         [Btn("« ʙᴀᴄᴋ", callback_data="back", api_kwargs={"style": "danger"})],
     ])
     await msg.edit_text(
