@@ -9,7 +9,7 @@ from telegram.ext import (Application, CommandHandler, CallbackQueryHandler,
 
 logging.basicConfig(level=logging.INFO)
 
-TOKEN = os.environ["BOT_TOKEN"]
+TOKEN = "8704843566:AAFEa6yrrkkwiIytuSxOVwQEWeiLReZq49s"
 FORCE_CHANNEL = os.environ.get("FORCE_CHANNEL", "@Rename_xo")
 UPDATES_URL = os.environ.get("UPDATES_URL", "https://t.me/Rename_xo")
 SUPPORT_URL = os.environ.get("SUPPORT_URL", "https://t.me/kcvxn")
